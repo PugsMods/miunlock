@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "miunlock",
+  "version": "${version}",
+  "name": "MiUnlock",
+  "description": "",
+  "authors": ["PugzAreCute"],
+  "contact": {
+    "email": "me@pugzarecute.com"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/miunlock/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.pugzarecute.miunlock.client.MiUnlockClient"
+    ],
+    "main": [
+      "com.pugzarecute.miunlock.MiUnlock"
+    ]
+  },
+  "mixins": [
+    "miunlock.mixins.json",
+    {
+      "config": "miunlock.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
