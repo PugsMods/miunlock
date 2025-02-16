@@ -50,7 +50,7 @@ public class TokenVerifier {
         if (!playerName.equals(player.getName().getString())) return false;
         LOGGER.debug("Name check succeed");
 
-        int modulo = Math.abs(chunkX + chunkZ + checkDigit) % 7;
+        int modulo = (Math.abs(chunkX + chunkZ) - checkDigit) % 7;
         LOGGER.debug("Modulo = {} ", modulo);
         return modulo == 0;
     }

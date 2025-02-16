@@ -33,7 +33,7 @@ public class CommandUtils {
                         PlayerEntity executor = commandContext.getSource().getPlayer();
                        assert executor != null;
                        ChunkPos chunk = executor.getChunkPos();
-                        String token = "PUG-"+chunk.x+"-"+chunk.z+"-"+executor.getName().getString()+"-"+(7-((chunk.x+chunk.z)%7));
+                        String token = "PUG-"+chunk.x+"-"+chunk.z+"-"+executor.getName().getString()+"-"+(Math.abs(chunk.x+chunk.z)%7);
 
                        commandContext.getSource().sendFeedback(() -> Text.literal(token),false);
 
