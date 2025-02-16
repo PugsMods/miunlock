@@ -26,7 +26,9 @@ import net.minecraft.util.math.ChunkPos;
 public class CommandUtils {
     public static void register(){
         CommandRegistrationCallback.EVENT.register(((commandDispatcher, commandRegistryAccess, registrationEnvironment) -> {
-            commandDispatcher.register(CommandManager.literal("get_unlock_token").executes(commandContext -> {
+            commandDispatcher.register(CommandManager.literal("get_unlock_token")
+                            .requires(source -> source.hasPermissionLevel(2))
+                            .executes(commandContext -> {
                    if(commandContext.getSource().isExecutedByPlayer()){
                         PlayerEntity executor = commandContext.getSource().getPlayer();
                        assert executor != null;
