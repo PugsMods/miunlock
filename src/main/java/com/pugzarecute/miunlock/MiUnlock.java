@@ -17,6 +17,7 @@
 
 package com.pugzarecute.miunlock;
 
+import com.pugzarecute.miunlock.commands.CommandUtils;
 import com.pugzarecute.miunlock.networking.NetworkingUtils;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -33,5 +34,8 @@ public class MiUnlock implements ModInitializer {
 
         LOGGER.debug("Registering BlockBreakEvent");
         BlockBreakEvent.register();
+
+        LOGGER.debug("Registering commands");
+        CommandUtils.register();
     }
 }
