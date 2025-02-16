@@ -19,17 +19,22 @@ package com.pugzarecute.miunlock.unlocking;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.ChunkPos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TokenVerifier {
+    private static final Logger LOGGER = LoggerFactory.getLogger("TokenVerifier");
+
     public static boolean verify(String token, ChunkPos pos, PlayerEntity player) {
         Pattern verificationPattern = Pattern.compile("[A-Z]{3}-(-?\\d+)-(-?\\d+)-([a-zA-Z0-9]+)-(-?\\d+)"); //"[A-Z]{3}-(-?\d+)-(-?\d+)-([a-zA-Z0-9]+)-(-?\d+)"gm
         Matcher patternMatcher = verificationPattern.matcher(token);
         boolean matches = patternMatcher.matches();
 
         if (!matches) return false;
+        LOGGER.debug("Pattern match check succeed");
 
         int chunkX = Integer.parseInt(patternMatcher.group(1));
         int chunkZ = Integer.parseInt(patternMatcher.group(2));
@@ -37,12 +42,17 @@ public class TokenVerifier {
         int checkDigit = Integer.parseInt(patternMatcher.group(4));
 
         if (chunkX != pos.x) return false;
+        LOGGER.debug("X check succeed");
 
         if (chunkZ != pos.z) return false;
+        LOGGER.debug("Z check succeed");
 
         if (!playerName.equals(player.getName().getString())) return false;
+        LOGGER.debug("Name check succeed");
 
-        return chunkX + chunkZ + checkDigit % 7 == 0;
+        int modulo = Math.abs(chunkX + chunkZ + checkDigit) % 7;
+        LOGGER.debug("Modulo = {} ", modulo);
+        return modulo == 0;
     }
 
 }
