@@ -28,23 +28,23 @@ import org.jetbrains.annotations.Nullable;
 public class BlockBreakEvent {
     public static void register() {
         PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
-            @Nullable
-            Integer existing_timestamp = world.getChunk(pos).getAttached(ChunkAttachments.UNLOCK_TIMESTAMP);
+            if(player instanceof ServerPlayerEntity){
+                @Nullable
+                Integer existing_timestamp = world.getChunk(pos).getAttached(ChunkAttachments.UNLOCK_TIMESTAMP);
 
-            if (player instanceof ServerPlayerEntity && existing_timestamp == null) {
-                ServerPlayNetworking.send((ServerPlayerEntity) player, new UnlockGUIPayload(pos));
-                return false;
+                if (existing_timestamp == null) {
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, new UnlockGUIPayload(pos));
+                    return false;
+                }
+
+                boolean status = (int) (System.currentTimeMillis() / 1000L) > existing_timestamp;
+
+                if (!status) {
+                    player.sendMessage(Text.literal("Please try breaking in " + (existing_timestamp - (int) (System.currentTimeMillis() / 1000L)) + " seconds!"), true);
+                    return false;
+                }
+                //Return true from upper scope
             }
-
-            if (existing_timestamp == null) return false;
-
-            boolean status = (int) (System.currentTimeMillis() / 1000L) > existing_timestamp;
-
-            if (!status) {
-                player.sendMessage(Text.literal("Please try breaking in " + (existing_timestamp - (int) (System.currentTimeMillis() / 1000L)) + "!"), true);
-                return false;
-            }
-
             return true;
         });
     }
