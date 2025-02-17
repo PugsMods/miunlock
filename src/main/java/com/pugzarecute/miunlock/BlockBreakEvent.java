@@ -33,7 +33,7 @@ public class BlockBreakEvent {
                 Integer existing_timestamp = world.getChunk(pos).getAttached(ChunkAttachments.UNLOCK_TIMESTAMP);
 
                 if (existing_timestamp == null) {
-                    ServerPlayNetworking.send((ServerPlayerEntity) player, new UnlockGUIPayload(pos));
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, new UnlockGUIPayload(pos, "break"));
                     return false;
                 }
 

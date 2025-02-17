@@ -19,12 +19,13 @@ package com.pugzarecute.miunlock.networking;
 
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.math.BlockPos;
 
-public record UnlockGUIPayload(BlockPos pos) implements CustomPayload {
+public record UnlockGUIPayload(BlockPos pos, String action) implements CustomPayload {
     public static final CustomPayload.Id<UnlockGUIPayload> ID = new CustomPayload.Id<>(NetworkingConstants.OPEN_UNLOCK_GUI);
-    public static final PacketCodec<RegistryByteBuf, UnlockGUIPayload> CODEC = PacketCodec.tuple(BlockPos.PACKET_CODEC, UnlockGUIPayload::pos, UnlockGUIPayload::new);
+    public static final PacketCodec<RegistryByteBuf, UnlockGUIPayload> CODEC = PacketCodec.tuple(BlockPos.PACKET_CODEC, UnlockGUIPayload::pos, PacketCodecs.STRING, UnlockGUIPayload::action, UnlockGUIPayload::new);
 
     @Override
     public Id<? extends CustomPayload> getId() {

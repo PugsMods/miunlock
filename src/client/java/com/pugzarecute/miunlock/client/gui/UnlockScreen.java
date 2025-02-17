@@ -39,10 +39,12 @@ public class UnlockScreen extends Screen {
     private TextFieldWidget codeInput;
     private ButtonWidget confirmButton;
     private final BlockPos pos;
+    private final String action;
 
-    public UnlockScreen(BlockPos pos) {
+    public UnlockScreen(BlockPos pos, String action) {
         super(Text.translatable("screen.miunlock.unlock.title"));
         this.pos = pos;
+        this.action = action;
     }
 
     @Override
@@ -62,8 +64,7 @@ public class UnlockScreen extends Screen {
     }
 
     private void validateCode(String code) {
-
-        ClientPlayNetworking.send(new SendUnlockCodePayload(pos, code));
+        ClientPlayNetworking.send(new SendUnlockCodePayload(pos, code, action));
 
         assert client != null;
         Objects.requireNonNull(client.currentScreen).close();

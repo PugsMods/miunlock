@@ -23,9 +23,9 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.math.BlockPos;
 
-public record SendUnlockCodePayload(BlockPos pos, String code) implements CustomPayload {
+public record SendUnlockCodePayload(BlockPos pos, String code, String action) implements CustomPayload {
     public static final Id<SendUnlockCodePayload> ID = new Id<>(NetworkingConstants.SEND_UNLOCK_CODE);
-    public static final PacketCodec<RegistryByteBuf, SendUnlockCodePayload> CODEC = PacketCodec.tuple(BlockPos.PACKET_CODEC, SendUnlockCodePayload::pos, PacketCodecs.STRING, SendUnlockCodePayload::code, SendUnlockCodePayload::new);
+    public static final PacketCodec<RegistryByteBuf, SendUnlockCodePayload> CODEC = PacketCodec.tuple(BlockPos.PACKET_CODEC, SendUnlockCodePayload::pos, PacketCodecs.STRING, SendUnlockCodePayload::code, PacketCodecs.STRING, SendUnlockCodePayload::action, SendUnlockCodePayload::new);
 
     @Override
     public Id<? extends CustomPayload> getId() {

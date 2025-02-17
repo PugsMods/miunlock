@@ -34,7 +34,11 @@ public class NetworkingUtils {
                 Chunk chunk = context.player().getServerWorld().getChunk(payload.pos());
 
                 if (!TokenVerifier.verify(payload.code(), chunk.getPos(), context.player())) {
-                    context.player().sendMessage(Text.literal("Token verify fail! Rebooting device"), true);
+                    if(payload.action().equals("break")) {
+                        context.player().sendMessage(Text.literal("Token verify fail! Rebooting device"), true);
+                    }else {
+                        context.player().sendMessage(Text.literal("Flashing is not allowed in locked state!"), true);
+                    }
                     context.player().kill(context.player().getServerWorld());
                     return;
                 }

@@ -16,7 +16,7 @@ public class MiUnlockClient implements ClientModInitializer {
         LOGGER.debug("Registering packet receiver");
         ClientPlayNetworking.registerGlobalReceiver(UnlockGUIPayload.ID, (payload, context) -> {
             context.client().execute(() -> {
-                MinecraftClient.getInstance().setScreen(new UnlockScreen(payload.pos()));
+                MinecraftClient.getInstance().setScreen(new UnlockScreen(payload.pos(), payload.action()));
             });
         });
     }
