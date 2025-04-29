@@ -25,4 +25,5 @@ import net.minecraft.util.Identifier;
 @SuppressWarnings("UnstableApiUsage")
 public class ChunkAttachments {
     public static final AttachmentType<Integer> UNLOCK_TIMESTAMP = AttachmentRegistry.createPersistent(Identifier.of("miunlock", "unlock_timestamp"), Codec.INT);
+    public static final AttachmentType<Integer> UNLOCKS = AttachmentRegistry.createPersistent(Identifier.of("miunlock", "unlocks"), Codec.INT);
 }

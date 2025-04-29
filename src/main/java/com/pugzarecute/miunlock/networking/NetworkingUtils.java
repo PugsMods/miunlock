@@ -50,6 +50,14 @@ public class NetworkingUtils {
                 if (existing_timestamp == null) {
                     chunk.setAttached(ChunkAttachments.UNLOCK_TIMESTAMP, (int) (System.currentTimeMillis() / 1000L + 30L));
                     context.player().sendMessage(Text.literal("Account bound successfully!"), true);
+
+                    int unlocks = context.player().getAttachedOrElse(ChunkAttachments.UNLOCKS,0)+1;
+                    context.player().setAttached(ChunkAttachments.UNLOCKS, unlocks);
+
+                    if(unlocks >= 50){
+                        context.player().sendMessage(Text.literal("You have awoken the random bricc"), true);
+                    }
+
                 }
             });
         });
